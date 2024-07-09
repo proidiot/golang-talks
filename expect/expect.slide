@@ -1,0 +1,142 @@
+Go/Expect
+10 July 2024
+
+Charles Southerland
+ATX Golang Meetup
+
+
+* It all started at NIST...
+
+.image nist-logo.png _ 800
+
+Among other tasks, NIST sets acceptance standards involving software developed
+for the US government, notably including software outsourced by contract.
+
+How could NIST fairly and clearly set expectations for those creating this
+software?
+
+
+* A tool for automated black-box testing
+
+.image don-libes.jpg
+
+Don Libes, a person who worked at NIST at the time, created a tool called
+Expect which allowed describing interactive behaviors using a sequence of
+expected output from some system being tested and potentially related data to
+send back to that system.
+
+
+* Expect's legacy
+
+The simplicity of this approach paired with the flexible level of abstraction
+when declaring expected output allowed this tool to quickly become ubiquitous
+in certain industries, like telecom, hardware, embedded, and info sec. This has
+also Expect to influence testing systems in many other languages.
+
+.image exploring-expect-book.jpeg
+
+.link https://www.oreilly.com/library/view/exploring-expect/9781565920903/ The definitive book on Expect is the O'Reilly book Exploring Expect
+
+
+* Tcl (a.k.a. Tool Command Language)
+
+.image tcl-powered.svg
+
+Don Libes felt the main way to use Expect should be with a domain-specific
+language rather than a library for an existing language like C (though such a
+library was also eventually created). Around the same time that he was inspired
+to create Expect, Tcl was created as a new kind of language intended to be used
+as the basis for other domain-specific languages, and so it was the obvious
+choice.
+
+
+* Hello Tcl/Expect!
+
+hello.exp:
+.code hello.exp
+
+output:
+.code hello.stdout
+
+
+* timeout
+
+unexpected.exp:
+.code unexpected.exp
+
+output:
+.code unexpected.stdout
+
+
+* Why not just use the original Tcl version of Expect?
+
+For really simple tests, the small amount of Tcl needed for Expect is fine. But
+when things get more complicated, more Tcl is needed, and that's when
+programmers tend to sour on this tool.
+
+Unfortunately, while Tcl is historically significant, the syntax is pretty
+different from most other programming languages. Over the years, most software
+engineers have chosen to use Lua instead of Tcl when creating domain-specific
+languages, as the syntax is more familiar and Windows support has existed for
+longer.
+
+
+* Why use Go/Expect?
+
+Well, this is the Go Meetup! :P
+
+Seriously though, Tcl/Expect is a great way to quickly create tests for network
+services where the tests rarely have to change even though the services are
+deployed in a variety of ways. These days, Go is the language most associated
+with quickly constructed network services that are deployed in a variety of
+ways, so it seems a natural fit.
+
+
+* Implementations of Go/Expect
+
+A quick search will bring up several attempts to create an Expect-like library for Go:
+
+- [[https://github.com/google/goexpect][github.com/google/goexpect]]
+- [[https://github.com/Netflix/go-expect][github.com/Netflix/go-expect]]
+- [[https://github.com/ThomasRooney/gexpect][github.com/ThomasRooney/gexpect]]
+
+Unfortunately, *none*of*these*have*been*updated*in*years*. In fact, the most
+recently updated option (from Google) is listed as deprecated.
+
+
+* Same name, different Expect
+
+To make matters worse, there are also several Go libraries and tools where the
+name was probably inspired by similarly named tools in other languages, which
+themselves might have had some tenuous historical ties to the original Expect,
+but these Go libraries and tools are pretty far removed from the functionality
+of Tcl/Expect:
+
+- [[https://golang.org/x/tools/go/expect][golang.org/x/tools/go/expect]]
+- [[https://github.com/karlseguin/expect][github.com/karlseguin/expect]]
+- [[https://github.com/gavv/httpexpect][github.com/gavv/httpexpect]]
+
+
+* Then why even talk about Go/Expect?
+
+Even though the existing Go/Expect implementations are all old and/or
+deprecated, it still seems plausible that we will see another one in the future
+(after all, several people have already attempted it). Let's try out these
+previous attempts to see if we can learn something from them.  We'll also try
+to get the same behavior without an Expect library at all.
+
+
+# TODO
+
+
+* My thoughts
+
+A tool like Expect is still very useful today. Quickly creating portable
+black-box tests is more relevant than ever.
+
+For now, if you have to test something very simple, Tcl/Expect may still be
+your best bet. For more complex tests, Go is probably a better choice.
+
+A good, maintained version of Go/Expect might be all that is preventing Go from
+taking over that space.
+

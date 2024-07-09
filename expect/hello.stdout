@@ -1,0 +1,4 @@
+spawn /bin/sh
+$ echo Hello, Expect!
+Hello, Expect!
+$ exit

@@ -1,0 +1,14 @@
+#!/usr/bin/expect -f
+spawn "/bin/sh"
+
+expect "$ "
+send "echo NOBODY EXPECTS THE SPANISH INQUISITION!\r"
+expect {
+	"Hello, Expect!" { exp_continue }
+	timeout { puts "timed out"; exit 1 }
+}
+
+expect "$ "
+send "exit\r"
+expect eof
+

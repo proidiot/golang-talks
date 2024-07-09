@@ -1,0 +1,11 @@
+#!/usr/bin/expect -f
+spawn "/bin/sh"              ; # Start a shell
+
+expect "$ "                  ; # Look for a shell prompt
+send "echo Hello, Expect!\r" ; # Send a command to the shell
+expect "Hello, Expect!"      ; # Look for specific output
+
+expect "$ "                  ; # Look for another shell prompt
+send "exit\r"                ; # Tell the shell to close gracefully
+expect eof                   ; # Check that stdout is closed
+
