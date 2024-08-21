@@ -1,5 +1,5 @@
 #!/usr/bin/expect -f
-spawn "/bin/sh"              ; # Start a shell
+spawn "/usr/bin/bash"              ; # Start a shell
 
 expect "$ "                  ; # Look for a shell prompt
 send "echo Hello, Expect!\r" ; # Send a command to the shell

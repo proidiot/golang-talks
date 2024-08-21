@@ -1,0 +1,17 @@
+#!/usr/bin/expect -f
+spawn /bin/nc golang.org 80 ; # netcat to an HTTP server
+
+send "GET / HTTP/1.0\rHost: golang.org\r\r"
+expect {
+	"\nHTTP/" {
+		expect {
+			"200 OK" {puts "ok"}
+			"301 Moved Permanently" {puts "moved"}
+			"302 Found" {puts "found"}
+			"308 Permanent Redirect" {puts "redirect"}
+			default {puts "wut"; exit 1}
+		}
+	}
+	timeout {puts "ded"; exit 1}
+}
+close

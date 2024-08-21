@@ -1,5 +1,5 @@
 #!/usr/bin/expect -f
-spawn "/bin/sh"
+spawn "/bin/bash"
 
 expect "$ "
 send "echo NOBODY EXPECTS THE SPANISH INQUISITION!\r"

@@ -59,13 +59,22 @@ output:
 .code hello.stdout
 
 
-* timeout
+* What if you get unexpected output?
 
 unexpected.exp:
 .code unexpected.exp
 
 output:
 .code unexpected.stdout
+
+
+* Chaining, branching, other processes
+
+http10.exp:
+.code http10.exp
+
+output:
+.code http10.stdout
 
 
 * Why not just use the original Tcl version of Expect?
@@ -92,7 +101,7 @@ with quickly constructed network services that are deployed in a variety of
 ways, so it seems a natural fit.
 
 
-* Implementations of Go/Expect
+* Implementations of Go/Expect?
 
 A quick search will bring up several attempts to create an Expect-like library for Go:
 
@@ -103,30 +112,57 @@ A quick search will bring up several attempts to create an Expect-like library f
 Unfortunately, *none*of*these*have*been*updated*in*years*. In fact, the most
 recently updated option (from Google) is listed as deprecated.
 
+But thanks to forks, maybe not all is lost? More on that in a bit, but for now
+let's try these original versions anyway.
+
+
+
+# hello.exp
+
+* Hello Expect in Tcl/Expect
+
+As a reminder, here's the original Tcl version of hello.exp:
+.code hello.exp
+
+
+* Hello Expect with github.com/google/goexpect
+
+Now here is a (roughly) similar setup with github.com/google/goexpect:
+.play hello-google.go /^//START/,/^//END/
+
+It is timing out? Because it is greedy! There is still a learning curve, and
+somewhat confusing documentation.
+
+
+* Hello Expect with github.com/Netflix/go-expect
+
+Here is an outline of what it would look like with the Netflix implementation:
+.play hello-netflix.go /^//START/,/^//END/
+
+This moves the spawn behavior into Go, which kinda makes sense.
+
+
+* Netflix forks
+Fortunately there seem to be somewhat active forks of the Netflix implementation
+.image netflix-go-expect-active-forks.png _ 800
+
+
+* Google forks
+There are even more somewhat active forks of the Google implementation
+.image google-goexpect-active-forks.png _ 800
+
 
 * Same name, different Expect
 
-To make matters worse, there are also several Go libraries and tools where the
-name was probably inspired by similarly named tools in other languages, which
-themselves might have had some tenuous historical ties to the original Expect,
-but these Go libraries and tools are pretty far removed from the functionality
-of Tcl/Expect:
+Take note! There are also several Go libraries and tools where the name was
+probably inspired by similarly named tools in other languages, which themselves
+might have had some tenuous historical ties to the original Expect, but these
+Go libraries and tools are pretty far removed from the functionality of
+Tcl/Expect:
 
 - [[https://golang.org/x/tools/go/expect][golang.org/x/tools/go/expect]]
 - [[https://github.com/karlseguin/expect][github.com/karlseguin/expect]]
 - [[https://github.com/gavv/httpexpect][github.com/gavv/httpexpect]]
-
-
-* Then why even talk about Go/Expect?
-
-Even though the existing Go/Expect implementations are all old and/or
-deprecated, it still seems plausible that we will see another one in the future
-(after all, several people have already attempted it). Let's try out these
-previous attempts to see if we can learn something from them.  We'll also try
-to get the same behavior without an Expect library at all.
-
-
-# TODO
 
 
 * My thoughts
@@ -138,5 +174,7 @@ For now, if you have to test something very simple, Tcl/Expect may still be
 your best bet. For more complex tests, Go is probably a better choice.
 
 A good, maintained version of Go/Expect might be all that is preventing Go from
-taking over that space.
+taking over that space. While the state of the original Go/Expect attempts
+isn't looking great at the moment, the existence of so many forks, some of
+which with fairly recent updates, seems to give some hope for the future.
 

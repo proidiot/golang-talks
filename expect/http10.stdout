@@ -1,0 +1,13 @@
+spawn /bin/nc golang.org 80
+GET / HTTP/1.0
+Host: golang.org
+
+HTTP/1.0 302 Found
+Location: https://golang.org/
+X-Cloud-Trace-Context: 95d35fd15bb0a86b73a2dc6362a88d51
+Date: Wed, 10 Jul 2024 23:04:08 GMT
+Content-Type: text/html
+Server: Google Frontend
+Content-Length: 0
+
+found
